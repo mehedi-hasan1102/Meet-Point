@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Hind+Siliguri:wght@400;500;600;700&family=Nunito+Sans:wght@300;400;600;700;800&family=Tiro+Bangla:ital@0;1&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 30 100% 97%;
+    --foreground: 26 13% 10%;
+
+    --card: 34 80% 99%;
+    --card-foreground: 26 13% 10%;
+
+    --popover: 34 80% 99%;
+    --popover-foreground: 26 13% 10%;
+
+    --primary: 5 64% 50%;
+    --primary-foreground: 30 100% 97%;
+
+    --secondary: 44 100% 48%;
+    --secondary-foreground: 20 20% 12%;
+
+    --muted: 31 65% 92%;
+    --muted-foreground: 24 12% 35%;
+
+    --accent: 44 100% 48%;
+    --accent-foreground: 20 20% 12%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 30 35% 84%;
+    --input: 30 35% 84%;
+    --ring: 5 64% 50%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 20 20% 12%;
+    --sidebar-foreground: 30 15% 92%;
+    --sidebar-primary: 38 60% 55%;
+    --sidebar-primary-foreground: 20 20% 12%;
+    --sidebar-accent: 20 15% 18%;
+    --sidebar-accent-foreground: 30 15% 92%;
+    --sidebar-border: 20 15% 22%;
+    --sidebar-ring: 38 60% 55%;
+
+    /* Custom tokens */
+    --warm-cream: 30 100% 97%;
+    --gold: 44 100% 48%;
+    --gold-light: 44 100% 58%;
+    --burgundy: 5 64% 50%;
+    --burgundy-dark: 5 65% 40%;
+    --charcoal: 26 13% 10%;
+    --success: 144 55% 27%;
+    --success-foreground: 0 0% 100%;
+
+    --font-display: 'Tiro Bangla', 'Cormorant Garamond', serif;
+    --font-body: 'Hind Siliguri', 'Nunito Sans', sans-serif;
+  }
+
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-body);
+    background-image: radial-gradient(circle at 15% 15%, hsl(var(--gold) / 0.08), transparent 25%);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+  }
+}
+
+@layer components {
+  .bn-label {
+    font-family: var(--font-body);
+    letter-spacing: 0.02em;
+    text-transform: none;
+  }
+
+  .hero-gradient {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--burgundy)) 0%,
+      hsl(var(--burgundy-dark)) 60%,
+      hsl(18 18% 10%) 100%
+    );
+  }
+
+  .alk-hero {
+    background:
+      radial-gradient(circle at 20% 0%, hsl(var(--gold) / 0.2), transparent 35%),
+      linear-gradient(120deg, hsl(var(--burgundy)) 0%, hsl(var(--burgundy-dark)) 58%, hsl(20 18% 10%) 100%);
+  }
+
+  .gold-gradient {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--gold)) 0%,
+      hsl(var(--gold-light)) 100%
+    );
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 ease-out;
+  }
+
+  .card-hover:hover {
+    @apply shadow-lg -translate-y-1;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}

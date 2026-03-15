@@ -5,8 +5,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ShoppingCart, Menu, X, User } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-import { useCartStore } from '@/store/cart-store';
-import { useAuthStore } from '@/store/auth-store';
+import { useCartStore } from '@/features/cart/store/cart-store';
+import { useAuthStore } from '@/features/auth/store/auth-store';
 import { Button } from '@/components/ui/button';
 
 const navLinks = [
@@ -53,7 +53,7 @@ export function Header() {
     <header
       className={`sticky top-0 z-50 transition-[background-color,border-color,box-shadow,backdrop-filter] duration-300 ${
         isTransparent
-          ? 'border-b-0 bg-transparent shadow-none backdrop-blur-0'
+          ? 'border-b border-white/10 bg-black/30 shadow-[0_18px_50px_rgba(0,0,0,0.18)] backdrop-blur-sm supports-[backdrop-filter]:bg-black/20'
           : 'border-b border-border/70 bg-background/95 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-background/85'
       }`}
     >
@@ -92,7 +92,9 @@ export function Header() {
               href={link.to}
               className={`text-[0.95rem] font-semibold tracking-wide transition-colors hover:text-primary ${
                 pathname === link.to
-                  ? 'text-primary'
+                  ? isTransparent
+                    ? 'text-gold'
+                    : 'text-primary'
                   : isTransparent
                     ? 'text-warm-cream/85 hover:text-warm-cream'
                     : 'text-foreground/80'
