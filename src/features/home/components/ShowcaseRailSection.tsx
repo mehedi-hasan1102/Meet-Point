@@ -7,13 +7,11 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { MenuItem } from "@/features/menu/types";
 
 interface ShowcaseRailSectionProps {
-  title: string;
-  subtitle: string;
   items: MenuItem[];
   categoryLabelMap: Record<string, string>;
 }
 
-export function ShowcaseRailSection({ title, subtitle, items, categoryLabelMap }: ShowcaseRailSectionProps) {
+export function ShowcaseRailSection({ items, categoryLabelMap }: ShowcaseRailSectionProps) {
   const railRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
@@ -48,12 +46,7 @@ export function ShowcaseRailSection({ title, subtitle, items, categoryLabelMap }
   return (
     <section className="border-b border-border bg-[#efe8dc] py-14 md:py-16">
       <div className="container">
-        <div className="mb-8 flex flex-col gap-5 md:mb-10 md:flex-row md:items-end md:justify-between">
-          <div className="max-w-2xl">
-            <p className="bn-label text-xs font-semibold text-[#b47b31]">{subtitle}</p>
-            <h2 className="mt-3 font-display text-3xl font-bold text-[#1f1a17] md:text-4xl">{title}</h2>
-          </div>
-
+        <div className="mb-8 flex justify-end">
           <div className="flex items-center gap-3">
             <button
               type="button"

@@ -2,23 +2,18 @@
 
 import { Layout } from "@/components/layout/Layout";
 import { categories, menuItems } from "@/mocks/menu";
-import type { MenuItem } from "@/features/menu/types";
 import signaturePicks from "@/features/home/content/signature-picks.json";
+import featuredItems from "@/features/home/content/featured-items.json";
 
 import { HomeHeroSection } from "@/features/home/components/HomeHeroSection";
-import { ShowcaseRailSection } from "@/features/home/components/ShowcaseRailSection";
+import { StatsSection } from "@/features/home/components/StatsSection";
 import { FeaturedItemsSection } from "@/features/home/components/FeaturedItemsSection";
 import { VideoHighlightSection } from "@/features/home/components/VideoHighlightSection";
 import { ComboOffersSection } from "@/features/home/components/ComboOffersSection";
 import { TestimonialsSection } from "@/features/home/components/TestimonialsSection";
 import { ReserveCtaSection } from "@/features/home/components/ReserveCtaSection";
 
-const featured = menuItems.filter((item) => item.featured).slice(0, 4);
 const categoryLabelMap = Object.fromEntries(categories.map((category) => [category.slug, category.name]));
-
-const showcaseItems = ["4", "20", "22", "14", "7", "12"]
-  .map((id) => menuItems.find((item) => item.id === id))
-  .filter((item): item is MenuItem => Boolean(item));
 
 const comboOffers = [
   {
@@ -61,13 +56,8 @@ export default function HomeScreen() {
   return (
     <Layout>
       <HomeHeroSection signaturePicks={signaturePicks} categoryLabelMap={categoryLabelMap} />
-      <ShowcaseRailSection
-        title="জনপ্রিয় খাবার, ঘরোয়া উপস্থাপনায়"
-        subtitle="সিগনেচার সিলেকশন"
-        items={showcaseItems}
-        categoryLabelMap={categoryLabelMap}
-      />
-      <FeaturedItemsSection items={featured} />
+      <StatsSection />
+      <FeaturedItemsSection items={featuredItems} />
       <VideoHighlightSection />
       <ComboOffersSection offers={comboOffers} />
       <TestimonialsSection testimonials={testimonials} />
