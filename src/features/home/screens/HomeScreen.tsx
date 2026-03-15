@@ -3,6 +3,7 @@
 import { Layout } from "@/components/layout/Layout";
 import { categories, menuItems } from "@/mocks/menu";
 import type { MenuItem } from "@/features/menu/types";
+import signaturePicks from "@/features/home/content/signature-picks.json";
 
 import { HomeHeroSection } from "@/features/home/components/HomeHeroSection";
 import { ShowcaseRailSection } from "@/features/home/components/ShowcaseRailSection";
@@ -13,7 +14,6 @@ import { TestimonialsSection } from "@/features/home/components/TestimonialsSect
 import { ReserveCtaSection } from "@/features/home/components/ReserveCtaSection";
 
 const featured = menuItems.filter((item) => item.featured).slice(0, 4);
-const signaturePicks = menuItems.slice(0, 3);
 const categoryLabelMap = Object.fromEntries(categories.map((category) => [category.slug, category.name]));
 
 const showcaseItems = ["4", "20", "22", "14", "7", "12"]
@@ -75,4 +75,3 @@ export default function HomeScreen() {
     </Layout>
   );
 }
-

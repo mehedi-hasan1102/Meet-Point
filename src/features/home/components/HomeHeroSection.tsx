@@ -8,7 +8,7 @@ import { formatCurrency } from "@/lib/utils";
 import type { MenuItem } from "@/features/menu/types";
 
 interface HomeHeroSectionProps {
-  signaturePicks: MenuItem[];
+  signaturePicks: Array<Pick<MenuItem, "id" | "name" | "image" | "category" | "price">>;
   categoryLabelMap: Record<string, string>;
 }
 
@@ -75,4 +75,3 @@ export function HomeHeroSection({ signaturePicks, categoryLabelMap }: HomeHeroSe
     </section>
   );
 }
-
