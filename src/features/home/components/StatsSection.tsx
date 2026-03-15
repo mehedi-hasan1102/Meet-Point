@@ -3,15 +3,26 @@
 import { useRef } from "react";
 import { useCountUp } from "react-countup";
 
+const toBengali = (n: number) =>
+  Math.floor(n).toString().replace(/\d/g, (d) => "০১২৩৪৫৬৭৮৯"[+d]);
+
 const stats = [
-  { end: 10000, suffix: "+", label: "সন্তুষ্ট গ্রাহক" },
+  { end: 1000, suffix: "+", label: "সন্তুষ্ট গ্রাহক" },
   { end: 200, suffix: "+", label: "মেনু আইটেম" },
-  { end: 95, suffix: "%", label: "স্বাস্থ্যকর রিপোর্ট" },
+  { end: 99, suffix: "%", label: "স্বাস্থ্যকর রিপোর্ট" },
 ];
 
 function StatItem({ end, suffix, label }: { end: number; suffix: string; label: string }) {
   const countUpRef = useRef<HTMLSpanElement>(null);
-  useCountUp({ ref: countUpRef, end, suffix, duration: 2.5, separator: ",", enableScrollSpy: true, scrollSpyOnce: true });
+  useCountUp({
+    ref: countUpRef,
+    end,
+    suffix,
+    duration: 2.5,
+    enableScrollSpy: true,
+    scrollSpyOnce: true,
+    formattingFn: (n) => toBengali(n) + suffix,
+  });
 
   return (
     <div className="flex flex-col items-center gap-1 px-4 text-center">
