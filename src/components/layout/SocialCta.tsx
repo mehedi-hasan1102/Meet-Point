@@ -2,11 +2,12 @@
 
 import { useState } from 'react';
 import { Facebook, Instagram, MessageCircleMore, X } from 'lucide-react';
+import { getWhatsAppOrderUrl } from '@/constants/whatsapp';
 
 const socialActions = [
   {
     label: 'হোয়াটসঅ্যাপ',
-    href: 'https://wa.me/8801712345678?text=Hello%20Meet%20Point',
+    href: getWhatsAppOrderUrl(),
     icon: MessageCircleMore,
     className: 'bg-[#25D366] hover:bg-[#1ebe5d]',
   },
