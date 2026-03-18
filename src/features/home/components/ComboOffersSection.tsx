@@ -1,11 +1,15 @@
 "use client";
 
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 
+import { useCartStore } from "@/features/cart/store/cart-store";
+import type { MenuItem } from "@/features/menu/types";
 import { formatCurrency } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 interface ComboOffer {
+  id: string;
   name: string;
   details: string;
   price: number;
@@ -17,6 +21,26 @@ interface ComboOffersSectionProps {
 }
 
 export function ComboOffersSection({ offers }: ComboOffersSectionProps) {
+  const router = useRouter();
+  const addItem = useCartStore((state) => state.addItem);
+
+  const handleOrderCombo = (combo: ComboOffer) => {
+    const comboItem: MenuItem = {
+      id: combo.id,
+      name: combo.name,
+      description: combo.details,
+      price: combo.price,
+      image: combo.image,
+      category: "combo",
+      available: true,
+      featured: true,
+      tags: ["combo", "offer"],
+    };
+
+    addItem(comboItem, 1);
+    router.push("/checkout");
+  };
+
   return (
     <section className="py-16 md:py-24">
       <div className="container">
@@ -27,7 +51,7 @@ export function ComboOffersSection({ offers }: ComboOffersSectionProps) {
 
         <div className="grid gap-5 md:grid-cols-3">
           {offers.map((combo) => (
-            <div key={combo.name} className="overflow-hidden rounded-2xl border border-border bg-card">
+            <div key={combo.id} className="overflow-hidden rounded-2xl border border-border bg-card">
               <div className="relative aspect-[5/3] overflow-hidden">
                 <img src={combo.image} alt={combo.name} className="h-full w-full object-cover" loading="lazy" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/0 to-transparent" />
@@ -38,9 +62,13 @@ export function ComboOffersSection({ offers }: ComboOffersSectionProps) {
               <div className="p-5">
                 <h3 className="font-display text-2xl font-semibold text-foreground">{combo.name}</h3>
                 <p className="mt-2 text-sm text-muted-foreground">{combo.details}</p>
-                <Link href="/menu" className="mt-4 inline-flex text-sm font-semibold text-primary">
+                <Button
+                  variant="secondary"
+                  className="mt-4"
+                  onClick={() => handleOrderCombo(combo)}
+                >
                   এই কম্বো অর্ডার করুন <ArrowRight className="ml-1 h-4 w-4" />
-                </Link>
+                </Button>
               </div>
             </div>
           ))}

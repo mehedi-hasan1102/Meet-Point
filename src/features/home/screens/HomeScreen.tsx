@@ -17,18 +17,21 @@ const categoryLabelMap = Object.fromEntries(categories.map((category) => [catego
 
 const comboOffers = [
   {
+    id: "combo-family",
     name: "ফ্যামিলি কম্বো",
     details: "২টি বার্গার, ১টি উইংস প্ল্যাটার, ২টি ড্রিংকস",
     price: 34.99,
     image: menuItems[6].image,
   },
   {
+    id: "combo-couple",
     name: "কাপল ডিলাইট",
     details: "১টি স্টেক, ১টি সালমন, ২টি ফ্রেশ জুস",
     price: 49.99,
     image: menuItems[4].image,
   },
   {
+    id: "combo-snack",
     name: "স্ন্যাক টাইম বক্স",
     details: "ক্যালামারি, ব্রুশকেটা, লেমনেড",
     price: 21.99,
