@@ -60,14 +60,19 @@ export function HomeHeroSection({ signaturePicks, categoryLabelMap }: HomeHeroSe
           <p className="mt-1 text-sm text-warm-cream/70">শেফের বিশেষ পছন্দের পদ</p>
           <div className="mt-6 space-y-4">
             {signaturePicks.map((item) => (
-              <div key={item.id} className="flex items-center gap-3 rounded-xl bg-white/5 p-3">
+              <Link
+                key={item.id}
+                href={`/menu/${item.id}`}
+                className="flex items-center gap-3 rounded-xl bg-white/5 p-3 transition-colors hover:bg-white/10"
+                aria-label={`${item.name} দেখুন এবং অর্ডার করুন`}
+              >
                 <img src={item.image} alt={item.name} className="h-16 w-16 rounded-lg object-cover" loading="lazy" />
                 <div className="flex-1">
                   <h3 className="text-sm font-semibold">{item.name}</h3>
                   <p className="text-xs text-warm-cream/65">{categoryLabelMap[item.category] ?? item.category}</p>
                 </div>
                 <span className="text-sm font-bold text-gold">{formatCurrency(item.price)}</span>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
