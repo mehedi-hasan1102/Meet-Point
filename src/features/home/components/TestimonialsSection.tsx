@@ -13,7 +13,7 @@ interface TestimonialsSectionProps {
 
 export function TestimonialsSection({ testimonials }: TestimonialsSectionProps) {
   return (
-    <section className="bg-muted/40 py-16">
+    <section className="bg-background py-16">
       <div className="container">
         <div className="mb-8 text-center">
           <p className="bn-label text-xs font-semibold text-primary">গ্রাহকের মতামত</p>

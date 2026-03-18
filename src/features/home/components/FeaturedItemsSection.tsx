@@ -12,7 +12,7 @@ interface FeaturedItemsSectionProps {
 
 export function FeaturedItemsSection({ items }: FeaturedItemsSectionProps) {
   return (
-    <section className="bg-muted/40 py-16 md:py-24">
+    <section className="bg-background py-16 md:py-24">
       <div className="container">
         <div className="mb-10 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
           <div>
