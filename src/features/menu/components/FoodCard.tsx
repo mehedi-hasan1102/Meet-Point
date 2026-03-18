@@ -15,7 +15,7 @@ export function FoodCard({ item }: FoodCardProps) {
   const addItem = useCartStore((s) => s.addItem);
 
   return (
-    <div className="group card-hover overflow-hidden rounded-lg border border-border bg-card">
+    <div className="group card-hover flex h-full flex-col overflow-hidden rounded-lg border border-border bg-card">
       <Link href={`/menu/${item.id}`} className="block">
         <div className="relative aspect-[4/3] overflow-hidden">
           <img
@@ -39,7 +39,7 @@ export function FoodCard({ item }: FoodCardProps) {
         </div>
       </Link>
 
-      <div className="p-4">
+      <div className="flex flex-1 flex-col p-4">
         <div className="flex items-start justify-between gap-2">
           <Link href={`/menu/${item.id}`}>
             <h3 className="font-display text-lg font-semibold text-foreground hover:text-primary transition-colors">
@@ -51,7 +51,7 @@ export function FoodCard({ item }: FoodCardProps) {
           </span>
         </div>
         <p className="mt-1.5 text-sm text-muted-foreground line-clamp-2">{item.description}</p>
-        <div className="mt-4">
+        <div className="mt-auto pt-4">
           <Button className="w-full" size="sm" disabled={!item.available} onClick={() => addItem(item)}>
             <ShoppingCart className="mr-2 h-4 w-4" />
             কার্টে যোগ করুন
