@@ -5,8 +5,9 @@ import { Layout } from '@/components/layout/Layout';
 import { useCartStore } from '@/features/cart/store/cart-store';
 import { CartItemRow } from '@/features/cart/components/CartItemRow';
 import { Button } from '@/components/ui/button';
-import { ShoppingBag, ArrowRight } from 'lucide-react';
+import { ShoppingBag, MessageCircleMore, PhoneCall } from 'lucide-react';
 import { formatCurrency } from '@/lib/utils';
+import { getDirectCallUrl, getWhatsAppOrderUrl } from '@/constants/whatsapp';
 
 const CartScreen = () => {
   const { items, getSubtotal, getTax, getTotal, clearCart, hasHydrated } = useCartStore();
@@ -64,11 +65,21 @@ const CartScreen = () => {
                   <span>{formatCurrency(getTotal())}</span>
                 </div>
               </div>
-              <Button asChild className="mt-6 w-full" size="lg">
-                <Link href="/checkout">
-                  চেকআউটে যান <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
+              <Button asChild className="mt-6 w-full bg-[#25D366] text-white hover:bg-[#1ebe5d]" size="lg">
+                <a href={getWhatsAppOrderUrl()} target="_blank" rel="noreferrer">
+                  <MessageCircleMore className="mr-2 h-4 w-4" />
+                  হোয়াটসঅ্যাপে অর্ডার করুন
+                </a>
               </Button>
+              <Button asChild className="mt-2 w-full" size="lg" variant="outline">
+                <a href={getDirectCallUrl()}>
+                  <PhoneCall className="mr-2 h-4 w-4" />
+                  সরাসরি কল করুন
+                </a>
+              </Button>
+              <p className="mt-2 text-xs text-muted-foreground">
+                দ্রুত সেবার জন্য আমরা সরাসরি হোয়াটসঅ্যাপে অর্ডার গ্রহণ করি। আরও অর্ডার যোগ করুন অথবা ফোন কল করুন।
+              </p>
             </div>
           </div>
         </div>

@@ -6,6 +6,7 @@ import { Layout } from '@/components/layout/Layout';
 import { FoodCard } from '@/features/menu/components/FoodCard';
 import { menuItems, categories } from '@/mocks/menu';
 import { Button } from '@/components/ui/button';
+import { WhatsAppOrderButton } from '@/components/layout/WhatsAppOrderButton';
 
 const MenuScreen = () => {
   const router = useRouter();
@@ -30,10 +31,11 @@ const MenuScreen = () => {
 
   return (
     <Layout>
-      <section className="container py-10 md:py-16">
+      <section className="container py-10 pb-28 md:py-16 md:pb-16">
         <div className="mb-8">
           <h1 className="font-display text-3xl font-bold text-foreground md:text-4xl">আমাদের মেনু</h1>
           <p className="mt-2 text-muted-foreground">আমাদের সব জনপ্রিয় ও যত্নে প্রস্তুত করা খাবার একসাথে দেখুন</p>
+          <WhatsAppOrderButton className="mt-5 max-w-sm" />
         </div>
 
         {/* Category filters */}

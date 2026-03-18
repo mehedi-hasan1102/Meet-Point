@@ -5,8 +5,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ShoppingCart, Menu, X, User } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-import { useCartStore } from '@/features/cart/store/cart-store';
 import { useAuthStore } from '@/features/auth/store/auth-store';
+import { useCartStore } from '@/features/cart/store/cart-store';
 import { Button } from '@/components/ui/button';
 
 const navLinks = [

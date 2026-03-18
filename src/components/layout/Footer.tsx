@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { getWhatsAppOrderUrl } from '@/constants/whatsapp';
+
 export function Footer() {
   return (
     <footer className="border-t border-gold/20 bg-charcoal text-warm-cream">
@@ -33,6 +35,9 @@ export function Footer() {
               {[['হোম', '/'], ['মেনু', '/menu'], ['কার্ট', '/cart'], ['লগইন', '/login']].map(([label, to]) => (
                 <Link key={to} href={to} className="text-sm text-warm-cream/70 transition-colors hover:text-gold">{label}</Link>
               ))}
+              <a href={getWhatsAppOrderUrl()} target="_blank" rel="noreferrer" className="text-sm text-warm-cream/70 transition-colors hover:text-gold">
+                হোয়াটসঅ্যাপে অর্ডার করুন
+              </a>
             </div>
           </div>
 

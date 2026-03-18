@@ -52,12 +52,7 @@ export function FoodCard({ item }: FoodCardProps) {
         </div>
         <p className="mt-1.5 text-sm text-muted-foreground line-clamp-2">{item.description}</p>
         <div className="mt-4">
-          <Button
-            className="w-full"
-            size="sm"
-            disabled={!item.available}
-            onClick={() => addItem(item)}
-          >
+          <Button className="w-full" size="sm" disabled={!item.available} onClick={() => addItem(item)}>
             <ShoppingCart className="mr-2 h-4 w-4" />
             কার্টে যোগ করুন
           </Button>
