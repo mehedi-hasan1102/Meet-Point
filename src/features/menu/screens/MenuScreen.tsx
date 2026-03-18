@@ -35,7 +35,7 @@ const MenuScreen = () => {
         <div className="mb-8">
           <h1 className="font-display text-3xl font-bold text-foreground md:text-4xl">আমাদের মেনু</h1>
           <p className="mt-2 text-muted-foreground">আমাদের সব জনপ্রিয় ও যত্নে প্রস্তুত করা খাবার একসাথে দেখুন</p>
-          <WhatsAppOrderButton className="mt-5 max-w-sm" />
+          <WhatsAppOrderButton className="mt-5 max-w-2xl" desktopInline />
         </div>
 
         {/* Category filters */}
