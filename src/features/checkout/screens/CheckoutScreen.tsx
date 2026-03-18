@@ -10,6 +10,8 @@ import { Label } from '@/components/ui/label';
 import { formatCurrency } from '@/lib/utils';
 import { getWhatsAppUrlWithMessage, RESTAURANT_NAME } from '@/constants/whatsapp';
 
+const BKASH_PAYMENT_NUMBER = '+8801747874773';
+
 const CheckoutScreen = () => {
   const router = useRouter();
   const { items, getSubtotal, getTax, getTotal, clearCart, hasHydrated } = useCartStore();
@@ -95,6 +97,37 @@ const CheckoutScreen = () => {
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div><Label htmlFor="city">শহর</Label><Input id="city" name="city" value={form.city} onChange={handleChange} required /></div>
                   <div><Label htmlFor="state">এলাকা</Label><Input id="state" name="state" value={form.state} onChange={handleChange} required /></div>
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-lg border border-border bg-card p-6">
+              <h2 className="font-display text-xl font-semibold mb-4">অর্ডার করার নিয়ম</h2>
+              <div className="space-y-4 text-sm text-muted-foreground">
+                <div className="rounded-md border border-border bg-muted/30 p-4">
+                  <p className="font-medium text-foreground">bKash Payment Number: {BKASH_PAYMENT_NUMBER}</p>
+                  <p className="mt-1">পেমেন্ট করার সময় সঠিক নম্বর ও এমাউন্ট নিশ্চিত করুন।</p>
+                </div>
+
+                <div>
+                  <p className="font-medium text-foreground">Step by Step:</p>
+                  <ol className="mt-2 list-decimal space-y-1 pl-5">
+                    <li>উপরের bKash নম্বরে আপনার অর্ডারের মোট টাকা `Send Money` করুন।</li>
+                    <li>bKash থেকে পাওয়া `Transaction ID` নিচের পেমেন্ট ফিল্ডে লিখুন।</li>
+                    <li>আপনার নাম, ফোন নম্বর ও সম্পূর্ণ ঠিকানা সঠিকভাবে পূরণ করুন।</li>
+                    <li>`অর্ডার নিশ্চিত করুন` বাটনে ক্লিক করলে WhatsApp খুলবে এবং অর্ডার তথ্য চলে যাবে।</li>
+                    <li>WhatsApp এ অর্ডার মেসেজটি `Send` করে অর্ডার সম্পন্ন করুন।</li>
+                  </ol>
+                </div>
+
+                <div>
+                  <p className="font-medium text-foreground">প্রয়োজনীয় তথ্য:</p>
+                  <ul className="mt-2 list-disc space-y-1 pl-5">
+                    <li>গ্রাহকের নাম</li>
+                    <li>ফোন নম্বর</li>
+                    <li>ডেলিভারি ঠিকানা (রাস্তা, শহর, এলাকা)</li>
+                    <li>bKash Transaction No</li>
+                  </ul>
                 </div>
               </div>
             </div>
