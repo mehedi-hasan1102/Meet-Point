@@ -41,7 +41,7 @@ const MenuScreen = () => {
         {/* Category filters */}
         <div className="mb-8 flex flex-wrap gap-2">
           <Button
-            variant={activeCategory === 'all' ? 'default' : 'outline'}
+            variant={activeCategory === 'all' ? 'primary' : 'secondary'}
             size="sm"
             onClick={() => handleCategory('all')}
           >
@@ -50,7 +50,7 @@ const MenuScreen = () => {
           {categories.map((cat) => (
             <Button
               key={cat.id}
-              variant={activeCategory === cat.slug ? 'default' : 'outline'}
+              variant={activeCategory === cat.slug ? 'primary' : 'secondary'}
               size="sm"
               onClick={() => handleCategory(cat.slug)}
             >

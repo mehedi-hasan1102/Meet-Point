@@ -122,32 +122,22 @@ export function Header() {
 
           {hasHydrated && isAuthenticated ? (
             <div className="hidden items-center gap-2 md:flex">
-              <Button asChild variant="ghost" size="sm" className={isTransparent ? 'text-warm-cream hover:bg-white/10 hover:text-warm-cream' : ''}>
+              <Button asChild variant="secondary" size="sm">
                 <Link href="/dashboard">
                   <User className="mr-1 h-4 w-4" /> একাউন্ট
                 </Link>
               </Button>
               <Button
-                variant="ghost"
+                variant="secondary"
                 size="sm"
                 onClick={logout}
-                className={isTransparent ? 'text-warm-cream hover:bg-white/10 hover:text-warm-cream' : ''}
               >
                 লগআউট
               </Button>
             </div>
-          ) : hasHydrated ? (
-            <Button
-              asChild
-              className={`hidden md:inline-flex ${isTransparent ? 'text-warm-cream hover:bg-white/10 hover:text-warm-cream' : ''}`}
-              variant="ghost"
-              size="sm"
-            >
-              <Link href="/login">সাইন ইন</Link>
-            </Button>
           ) : null}
 
-          <Button asChild className="hidden lg:inline-flex gold-gradient border-0 px-5 text-charcoal hover:opacity-90">
+          <Button asChild className="hidden lg:inline-flex px-5">
             <Link href="/menu">অর্ডার করুন</Link>
           </Button>
 
@@ -181,8 +171,6 @@ export function Header() {
                 <Link href="/dashboard" onClick={() => setMobileOpen(false)} className="py-2 text-sm font-medium text-muted-foreground">একাউন্ট</Link>
                 <button onClick={() => { logout(); setMobileOpen(false); }} className="py-2 text-left text-sm font-medium text-muted-foreground">লগআউট</button>
               </>
-            ) : hasHydrated ? (
-              <Link href="/login" onClick={() => setMobileOpen(false)} className="py-2 text-sm font-semibold text-foreground/80">সাইন ইন</Link>
             ) : null}
           </nav>
         </div>

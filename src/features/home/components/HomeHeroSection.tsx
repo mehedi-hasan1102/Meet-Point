@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, PhoneCall } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { getDirectCallUrl } from "@/constants/whatsapp";
 import { formatCurrency } from "@/lib/utils";
 import type { MenuItem } from "@/features/menu/types";
 
@@ -40,17 +41,16 @@ export function HomeHeroSection({ signaturePicks, categoryLabelMap }: HomeHeroSe
             এক জায়গায় পেয়ে যান রেস্টুরেন্ট-স্টাইলের খাবার, স্পেশাল কম্বো অফার এবং হোম ডেলিভারি। প্রতিটি পদে তাজা উপকরণ ও ঘরোয়া সমৃদ্ধ স্বাদ।
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
-            <Button asChild size="lg" className="gold-gradient border-0 px-7 text-charcoal hover:opacity-90">
+            <Button asChild size="lg" className="px-7">
               <Link href="/menu">
                 মেনু দেখুন <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-warm-cream/40 bg-transparent px-7 text-warm-cream hover:bg-warm-cream/10 hover:text-warm-cream"
-            >
-              টেবিল বুক করুন
+            <Button asChild size="lg" variant="secondary" className="px-7">
+              <a href={getDirectCallUrl()}>
+                <PhoneCall className="mr-2 h-4 w-4" />
+                কল করুন
+              </a>
             </Button>
           </div>
         </div>

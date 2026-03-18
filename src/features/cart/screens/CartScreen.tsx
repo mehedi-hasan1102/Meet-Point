@@ -40,7 +40,7 @@ const CartScreen = () => {
                 <CartItemRow key={item.menuItem.id} item={item} />
               ))}
               <div className="mt-4 flex justify-end">
-                <Button variant="ghost" size="sm" className="text-destructive hover:text-destructive" onClick={clearCart}>
+                <Button variant="secondary" size="sm" onClick={clearCart}>
                   কার্ট খালি করুন
                 </Button>
               </div>

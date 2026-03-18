@@ -176,7 +176,7 @@ const CheckoutScreen = () => {
                 </div>
               </div>
               <Button type="submit" className="w-full mt-6" size="lg">অর্ডার নিশ্চিত করুন</Button>
-              <Button asChild className="mt-2 w-full" size="lg" variant="outline">
+              <Button asChild className="mt-2 w-full" size="lg" variant="secondary">
                 <a href={getDirectCallUrl()}>
                   <PhoneCall className="mr-2 h-4 w-4" />
                   সরাসরি কল করুন

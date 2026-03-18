@@ -59,11 +59,11 @@ const ProductDetailScreen = () => {
                 <div className="flex items-center gap-3">
                   <span className="text-sm font-medium text-foreground">পরিমাণ:</span>
                   <div className="flex items-center border border-border rounded-md">
-                    <Button variant="ghost" size="icon" className="h-10 w-10" onClick={() => setQuantity(Math.max(1, quantity - 1))}>
+                    <Button variant="secondary" size="icon" className="h-10 w-10" onClick={() => setQuantity(Math.max(1, quantity - 1))}>
                       <Minus className="h-4 w-4" />
                     </Button>
                     <span className="w-10 text-center font-medium">{quantity}</span>
-                    <Button variant="ghost" size="icon" className="h-10 w-10" onClick={() => setQuantity(quantity + 1)}>
+                    <Button variant="secondary" size="icon" className="h-10 w-10" onClick={() => setQuantity(quantity + 1)}>
                       <Plus className="h-4 w-4" />
                     </Button>
                   </div>

@@ -27,7 +27,7 @@ const ForgotPasswordScreen = () => {
             <div className="mt-8 rounded-lg border border-border bg-card p-6">
               <p className="text-success font-medium">রিসেট লিংক পাঠানো হয়েছে!</p>
               <p className="mt-2 text-sm text-muted-foreground">নির্দেশনা দেখতে আপনার ইনবক্স চেক করুন।</p>
-              <Button asChild className="mt-4" variant="outline">
+              <Button asChild className="mt-4" variant="secondary">
                 <Link href="/login">লগইনে ফিরে যান</Link>
               </Button>
             </div>

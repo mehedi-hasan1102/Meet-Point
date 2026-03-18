@@ -19,7 +19,7 @@ export function FeaturedItemsSection({ items }: FeaturedItemsSectionProps) {
             <p className="bn-label text-xs font-semibold text-primary">প্রিয় মেনু</p>
             <h2 className="mt-3 font-display text-3xl font-bold text-foreground md:text-4xl">নতুন খাবার</h2>
           </div>
-          <Button asChild variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
+          <Button asChild variant="secondary">
             <Link href="/menu">সব আইটেম দেখুন</Link>
           </Button>
         </div>

@@ -31,7 +31,7 @@ export function CartItemRow({ item }: CartItemProps) {
         <div className="flex items-center gap-2 mt-2">
           <div className="flex items-center border border-border rounded-md">
             <Button
-              variant="ghost"
+              variant="secondary"
               size="icon"
               className="h-8 w-8"
               onClick={() => updateQuantity(item.menuItem.id, item.quantity - 1)}
@@ -40,7 +40,7 @@ export function CartItemRow({ item }: CartItemProps) {
             </Button>
             <span className="w-8 text-center text-sm font-medium">{item.quantity}</span>
             <Button
-              variant="ghost"
+              variant="secondary"
               size="icon"
               className="h-8 w-8"
               onClick={() => updateQuantity(item.menuItem.id, item.quantity + 1)}
@@ -49,9 +49,9 @@ export function CartItemRow({ item }: CartItemProps) {
             </Button>
           </div>
           <Button
-            variant="ghost"
+            variant="secondary"
             size="icon"
-            className="h-8 w-8 text-destructive hover:text-destructive"
+            className="h-8 w-8"
             onClick={() => removeItem(item.menuItem.id)}
           >
             <Trash2 className="h-4 w-4" />

@@ -45,7 +45,7 @@ const DashboardScreen = () => {
 
         <div className="flex flex-wrap gap-2 mb-8">
           {tabs.map(({ key, label, icon: Icon }) => (
-            <Button key={key} variant={activeTab === key ? 'default' : 'outline'} size="sm" onClick={() => setActiveTab(key)}>
+            <Button key={key} variant={activeTab === key ? 'primary' : 'secondary'} size="sm" onClick={() => setActiveTab(key)}>
               <Icon className="mr-2 h-4 w-4" /> {label}
             </Button>
           ))}

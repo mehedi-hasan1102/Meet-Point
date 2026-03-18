@@ -32,7 +32,7 @@ const OrderConfirmationScreen = () => {
             <Button asChild>
               <Link href="/menu">আরও অর্ডার করুন</Link>
             </Button>
-            <Button asChild variant="outline">
+            <Button asChild variant="secondary">
               <Link href="/">হোমে ফিরে যান</Link>
             </Button>
           </div>

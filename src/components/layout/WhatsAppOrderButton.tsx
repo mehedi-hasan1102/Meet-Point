@@ -23,14 +23,18 @@ export function WhatsAppOrderButton({
         <Button
           asChild
           size={size}
-          className={cn('bg-[#25D366] text-white hover:bg-[#1ebe5d]', fullWidth && 'w-full', desktopInline && 'md:flex-1')}
+          className={cn(
+            'border-0 bg-[#25D366] text-white shadow-[0_10px_24px_rgba(37,211,102,0.28)] hover:bg-[#20bd5a] hover:shadow-[0_12px_28px_rgba(37,211,102,0.34)] focus-visible:ring-[#25D366]/55',
+            fullWidth && 'w-full',
+            desktopInline && 'md:flex-1',
+          )}
         >
           <a href={getWhatsAppOrderUrl()} target="_blank" rel="noreferrer" aria-label="হোয়াটসঅ্যাপে অর্ডার করুন">
             <MessageCircleMore className="mr-2 h-4 w-4" />
             হোয়াটসঅ্যাপে অর্ডার করুন
           </a>
         </Button>
-        <Button asChild size={size} variant="outline" className={cn(fullWidth && 'w-full', desktopInline && 'md:flex-1')}>
+        <Button asChild size={size} variant="secondary" className={cn(fullWidth && 'w-full', desktopInline && 'md:flex-1')}>
           <a href={getDirectCallUrl()} aria-label="সরাসরি কল করুন">
             <PhoneCall className="mr-2 h-4 w-4" />
             সরাসরি কল করুন
