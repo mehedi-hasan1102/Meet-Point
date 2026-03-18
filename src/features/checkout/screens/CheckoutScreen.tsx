@@ -7,8 +7,9 @@ import { useCartStore } from '@/features/cart/store/cart-store';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { PhoneCall } from 'lucide-react';
 import { formatCurrency } from '@/lib/utils';
-import { getWhatsAppUrlWithMessage, RESTAURANT_NAME } from '@/constants/whatsapp';
+import { getDirectCallUrl, getWhatsAppUrlWithMessage, RESTAURANT_NAME } from '@/constants/whatsapp';
 
 const BKASH_PAYMENT_NUMBER = '+8801747874773';
 
@@ -118,6 +119,9 @@ const CheckoutScreen = () => {
                     <li>`অর্ডার নিশ্চিত করুন` বাটনে ক্লিক করলে WhatsApp খুলবে এবং অর্ডার তথ্য চলে যাবে।</li>
                     <li>WhatsApp এ অর্ডার মেসেজটি `Send` করে অর্ডার সম্পন্ন করুন।</li>
                   </ol>
+                  <p className="mt-3">
+                    WhatsApp ব্যবহার করতে না চাইলে নিচের `সরাসরি কল করুন` বাটনে ক্লিক করে ফোন কলের মাধ্যমেও অর্ডার করতে পারবেন।
+                  </p>
                 </div>
 
                 <div>
@@ -172,6 +176,12 @@ const CheckoutScreen = () => {
                 </div>
               </div>
               <Button type="submit" className="w-full mt-6" size="lg">অর্ডার নিশ্চিত করুন</Button>
+              <Button asChild className="mt-2 w-full" size="lg" variant="outline">
+                <a href={getDirectCallUrl()}>
+                  <PhoneCall className="mr-2 h-4 w-4" />
+                  সরাসরি কল করুন
+                </a>
+              </Button>
             </div>
           </div>
         </form>
