@@ -63,7 +63,7 @@ export function ComboOffersSection({ offers }: ComboOffersSectionProps) {
                 <h3 className="font-display text-2xl font-semibold text-foreground">{combo.name}</h3>
                 <p className="mt-2 text-sm text-muted-foreground">{combo.details}</p>
                 <Button
-                  variant="secondary"
+                  variant="primary"
                   className="mt-4"
                   onClick={() => handleOrderCombo(combo)}
                 >
