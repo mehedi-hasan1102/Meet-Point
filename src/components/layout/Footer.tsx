@@ -41,7 +41,7 @@ export function Footer() {
           <div>
             <h4 className="mb-4 font-display text-sm font-semibold uppercase tracking-[0.2em] text-gold">দ্রুত লিংক</h4>
             <div className="flex flex-col gap-2">
-              {[['হোম', '/'], ['মেনু', '/menu'], ['কার্ট', '/cart'], ['লগইন', '/login']].map(([label, to]) => (
+              {[['হোম', '/'], ['মেনু', '/menu'], ['কার্ট', '/cart'], ['ড্যাশবোর্ড', '/dashboard']].map(([label, to]) => (
                 <Link key={to} href={to} className="text-sm text-warm-cream/70 transition-colors hover:text-gold">{label}</Link>
               ))}
               <a href={getWhatsAppOrderUrl()} target="_blank" rel="noreferrer" className="text-sm text-warm-cream/70 transition-colors hover:text-gold">

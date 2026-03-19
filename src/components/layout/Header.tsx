@@ -3,9 +3,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ShoppingCart, Menu, X, User } from 'lucide-react';
+import { ShoppingCart, Menu, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-import { useAuthStore } from '@/features/auth/store/auth-store';
 import { useCartStore } from '@/features/cart/store/cart-store';
 import { Button } from '@/components/ui/button';
 
@@ -24,7 +23,6 @@ export function Header() {
   const isHomePage = pathname === '/';
   const isTransparent = isHomePage && !isScrolled && !mobileOpen;
   const itemCount = useCartStore((s) => (s.hasHydrated ? s.getItemCount() : 0));
-  const { isAuthenticated, logout, hasHydrated, syncSession } = useAuthStore();
 
   useEffect(() => {
     const updateTopStripVisibility = () => {
@@ -48,12 +46,6 @@ export function Header() {
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, [isHomePage]);
-
-  useEffect(() => {
-    if (hasHydrated) {
-      void syncSession();
-    }
-  }, [hasHydrated, syncSession]);
 
   return (
     <header
@@ -126,23 +118,6 @@ export function Header() {
             )}
           </Link>
 
-          {hasHydrated && isAuthenticated ? (
-            <div className="hidden items-center gap-2 md:flex">
-              <Button asChild variant="secondary" size="sm">
-                <Link href="/dashboard">
-                  <User className="mr-1 h-4 w-4" /> একাউন্ট
-                </Link>
-              </Button>
-              <Button
-                variant="secondary"
-                size="sm"
-                onClick={logout}
-              >
-                লগআউট
-              </Button>
-            </div>
-          ) : null}
-
           <Button asChild className="hidden lg:inline-flex px-5">
             <Link href="/menu">অর্ডার করুন</Link>
           </Button>
@@ -172,12 +147,6 @@ export function Header() {
                 {link.label}
               </Link>
             ))}
-            {hasHydrated && isAuthenticated ? (
-              <>
-                <Link href="/dashboard" onClick={() => setMobileOpen(false)} className="py-2 text-sm font-medium text-muted-foreground">একাউন্ট</Link>
-                <button onClick={() => { logout(); setMobileOpen(false); }} className="py-2 text-left text-sm font-medium text-muted-foreground">লগআউট</button>
-              </>
-            ) : null}
           </nav>
         </div>
       )}
