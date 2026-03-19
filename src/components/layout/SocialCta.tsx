@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Facebook, Instagram, MessageCircleMore, X } from 'lucide-react';
+import { siteContact } from '@/constants/site-contact';
 import { getWhatsAppOrderUrl } from '@/constants/whatsapp';
 
 const socialActions = [
@@ -13,13 +14,13 @@ const socialActions = [
   },
   {
     label: 'মেসেঞ্জার',
-    href: 'https://m.me/meetpointrestaurant',
+    href: siteContact.social.messengerUrl,
     icon: Facebook,
     className: 'bg-[#1877F2] hover:bg-[#0f67d8]',
   },
   {
     label: 'ইনস্টাগ্রাম',
-    href: 'https://ig.me/m/meetpointrestaurant',
+    href: siteContact.social.instagramUrl,
     icon: Instagram,
     className: 'bg-[#E4405F] hover:bg-[#cf3352]',
   },

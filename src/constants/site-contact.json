@@ -1,0 +1,28 @@
+{
+  "restaurant": {
+    "name": "Meet Point Cafe & Restaurant",
+    "shortName": "Meet Point"
+  },
+  "contact": {
+    "whatsappNumber": "8801747874773",
+    "phoneDisplay": "+880 1712-345678",
+    "phoneDial": "+8801712345678",
+    "email": "hello@meetpoint.com"
+  },
+  "location": {
+    "address": "হাউস ২২, ধানমন্ডি, ঢাকা",
+    "mapUrl": "https://maps.google.com/?q=House+22,+Dhanmondi,+Dhaka"
+  },
+  "social": {
+    "messengerUrl": "https://m.me/meetpointrestaurant",
+    "instagramUrl": "https://ig.me/m/meetpointrestaurant",
+    "facebookUrl": "https://facebook.com/meetpointrestaurant"
+  },
+  "payment": {
+    "bkashNumber": "+8801747874773"
+  },
+  "openingHours": {
+    "weekday": "শনিবার - বৃহস্পতিবার: সকাল ১০:০০ - রাত ১১:৩০",
+    "friday": "শুক্রবার: বিকাল ৩:০০ - রাত ১১:৩০"
+  }
+}

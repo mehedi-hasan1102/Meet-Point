@@ -9,10 +9,11 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { PhoneCall } from 'lucide-react';
 import { formatCurrency } from '@/lib/utils';
+import { siteContact } from '@/constants/site-contact';
 import { getDirectCallUrl, getWhatsAppUrlWithMessage, RESTAURANT_NAME } from '@/constants/whatsapp';
 import { apiClient } from '@/services/api-client';
 
-const BKASH_PAYMENT_NUMBER = '+8801747874773';
+const BKASH_PAYMENT_NUMBER = siteContact.payment.bkashNumber;
 
 const CheckoutScreen = () => {
   const router = useRouter();

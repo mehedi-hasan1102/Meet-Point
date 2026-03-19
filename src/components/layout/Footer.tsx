@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { siteContact } from '@/constants/site-contact';
 import { getWhatsAppOrderUrl } from '@/constants/whatsapp';
 
 export function Footer() {
@@ -12,13 +13,13 @@ export function Footer() {
             <Link href="/" className="inline-flex items-center gap-4">
               <Image
                 src="/logo.png"
-                alt="Meet Point Cafe & Restaurant"
+                alt={siteContact.restaurant.name}
                 width={160}
                 height={160}
                 className="h-24 w-auto sm:h-28"
               />
               <span className="flex flex-col leading-none">
-                <span className="font-display text-3xl font-bold uppercase text-gold">Meet Point</span>
+                <span className="font-display text-3xl font-bold uppercase text-gold">{siteContact.restaurant.shortName}</span>
                 <span className="mt-2 text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-warm-cream/70">
                   Cafe & Restaurant
                 </span>
@@ -44,17 +45,17 @@ export function Footer() {
           <div>
             <h4 className="mb-4 font-display text-sm font-semibold uppercase tracking-[0.2em] text-gold">খোলার সময়</h4>
             <div className="space-y-1 text-sm text-warm-cream/70">
-              <p>শনিবার - বৃহস্পতিবার: সকাল ১০:০০ - রাত ১১:৩০</p>
-              <p>শুক্রবার: বিকাল ৩:০০ - রাত ১১:৩০</p>
+              <p>{siteContact.openingHours.weekday}</p>
+              <p>{siteContact.openingHours.friday}</p>
             </div>
           </div>
 
           <div>
             <h4 className="mb-4 font-display text-sm font-semibold uppercase tracking-[0.2em] text-gold">যোগাযোগ</h4>
             <div className="space-y-1 text-sm text-warm-cream/70">
-              <p>হাউস ২২, ধানমন্ডি, ঢাকা</p>
-              <p>+880 1712-345678</p>
-              <p>hello@meetpoint.com</p>
+              <p>{siteContact.location.address}</p>
+              <p>{siteContact.contact.phoneDisplay}</p>
+              <p>{siteContact.contact.email}</p>
             </div>
           </div>
         </div>

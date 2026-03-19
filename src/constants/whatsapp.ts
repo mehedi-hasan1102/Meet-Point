@@ -1,5 +1,7 @@
-export const RESTAURANT_NAME = 'Meet Point Cafe & Restaurant';
-export const WHATSAPP_NUMBER = '8801747874773';
+import { siteContact } from '@/constants/site-contact';
+
+export const RESTAURANT_NAME = siteContact.restaurant.name;
+export const WHATSAPP_NUMBER = siteContact.contact.whatsappNumber;
 export const WHATSAPP_ORDER_MESSAGE = `Hi, I want to place an order from ${RESTAURANT_NAME}.`;
 
 export const getWhatsAppOrderUrl = () => {
@@ -13,5 +15,5 @@ export const getWhatsAppUrlWithMessage = (message: string) => {
 };
 
 export const getDirectCallUrl = () => {
-  return `tel:+${WHATSAPP_NUMBER}`;
+  return `tel:${siteContact.contact.phoneDial}`;
 };
