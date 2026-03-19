@@ -2,13 +2,28 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { categories, menuItems } from '@/mocks/menu';
-import { mockOrders } from '@/mocks/orders';
 import { Button } from '@/components/ui/button';
 import { formatCurrency } from '@/lib/utils';
+import { apiClient } from '@/services/api-client';
 import {
   LayoutDashboard, UtensilsCrossed, Package, BarChart3, Menu, X,
 } from 'lucide-react';
+import { useEffect } from 'react';
+import type { Order } from '@/features/orders/types';
+
+type AdminCategory = {
+  id: string;
+  name: string;
+  slug: string;
+};
+
+type AdminMenuItem = {
+  id: string;
+  name: string;
+  price: number;
+  available: boolean;
+  category?: string;
+};
 
 type AdminTab = 'overview' | 'menu' | 'orders';
 
@@ -33,11 +48,36 @@ const stats = [
   { label: 'গড় অর্ডার', value: '৳ ৩৮.৫০', change: '+৩%', icon: LayoutDashboard },
 ];
 
-const categoryLabelMap = Object.fromEntries(categories.map((category) => [category.slug, category.name]));
-
 const AdminScreen = () => {
   const [tab, setTab] = useState<AdminTab>('overview');
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [categories, setCategories] = useState<AdminCategory[]>([]);
+  const [menuItems, setMenuItems] = useState<AdminMenuItem[]>([]);
+  const [orders, setOrders] = useState<Order[]>([]);
+
+  useEffect(() => {
+    const loadAdminData = async () => {
+      try {
+        const [categoriesRes, menuItemsRes, ordersRes] = await Promise.all([
+          apiClient.get<{ data: AdminCategory[] }>('/admin/categories'),
+          apiClient.get<{ data: AdminMenuItem[] }>('/admin/menu-items'),
+          apiClient.get<{ data: Order[] }>('/admin/orders'),
+        ]);
+
+        setCategories(categoriesRes.data.data || []);
+        setMenuItems(menuItemsRes.data.data || []);
+        setOrders(ordersRes.data.data || []);
+      } catch {
+        setCategories([]);
+        setMenuItems([]);
+        setOrders([]);
+      }
+    };
+
+    void loadAdminData();
+  }, []);
+
+  const categoryLabelMap = Object.fromEntries(categories.map((category) => [category.slug, category.name]));
 
   return (
     <div className="flex min-h-screen">
@@ -105,7 +145,7 @@ const AdminScreen = () => {
                     {menuItems.map((item) => (
                       <tr key={item.id} className="border-b border-border last:border-0 hover:bg-muted/30">
                         <td className="px-4 py-3 font-medium text-foreground">{item.name}</td>
-                        <td className="px-4 py-3 text-muted-foreground">{categoryLabelMap[item.category] ?? item.category}</td>
+                        <td className="px-4 py-3 text-muted-foreground">{categoryLabelMap[item.category || ''] ?? item.category}</td>
                         <td className="px-4 py-3 text-foreground">{formatCurrency(item.price)}</td>
                         <td className="px-4 py-3">
                           <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${item.available ? 'bg-success/10 text-success' : 'bg-destructive/10 text-destructive'}`}>
@@ -122,7 +162,7 @@ const AdminScreen = () => {
 
           {tab === 'orders' && (
             <div className="space-y-4">
-              {mockOrders.map((order) => (
+              {orders.map((order) => (
                 <div key={order.id} className="rounded-lg border border-border bg-card p-5">
                   <div className="flex flex-wrap items-center justify-between gap-3 mb-2">
                     <span className="font-display font-semibold text-foreground">{order.orderNumber}</span>

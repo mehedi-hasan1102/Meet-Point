@@ -1,21 +1,48 @@
 "use client";
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { Layout } from '@/components/layout/Layout';
-import { menuItems } from '@/mocks/menu';
 import { useCartStore } from '@/features/cart/store/cart-store';
 import { Button } from '@/components/ui/button';
 import { Minus, Plus, ShoppingCart, ArrowLeft } from 'lucide-react';
 import { formatCurrency } from '@/lib/utils';
+import { menuApi } from '@/features/menu/services/menu-api';
+import type { MenuItem } from '@/features/menu/types';
 
 const ProductDetailScreen = () => {
   const params = useParams();
   const id = typeof params.id === 'string' ? params.id : params.id?.[0];
-  const item = menuItems.find((i) => i.id === id);
   const addItem = useCartStore((s) => s.addItem);
+  const [item, setItem] = useState<MenuItem | null>(null);
+  const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
+
+  useEffect(() => {
+    const loadItem = async () => {
+      if (!id) {
+        setItem(null);
+        setLoading(false);
+        return;
+      }
+
+      setLoading(true);
+      const data = await menuApi.getMenuItem(id);
+      setItem(data ?? null);
+      setLoading(false);
+    };
+
+    void loadItem();
+  }, [id]);
+
+  if (loading) {
+    return (
+      <Layout>
+        <div className="container py-20 text-center text-muted-foreground">লোড হচ্ছে...</div>
+      </Layout>
+    );
+  }
 
   if (!item) {
     return (

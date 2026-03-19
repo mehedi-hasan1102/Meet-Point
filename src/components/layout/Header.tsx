@@ -24,7 +24,7 @@ export function Header() {
   const isHomePage = pathname === '/';
   const isTransparent = isHomePage && !isScrolled && !mobileOpen;
   const itemCount = useCartStore((s) => (s.hasHydrated ? s.getItemCount() : 0));
-  const { isAuthenticated, logout, hasHydrated } = useAuthStore();
+  const { isAuthenticated, logout, hasHydrated, syncSession } = useAuthStore();
 
   useEffect(() => {
     const updateTopStripVisibility = () => {
@@ -48,6 +48,12 @@ export function Header() {
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, [isHomePage]);
+
+  useEffect(() => {
+    if (hasHydrated) {
+      void syncSession();
+    }
+  }, [hasHydrated, syncSession]);
 
   return (
     <header

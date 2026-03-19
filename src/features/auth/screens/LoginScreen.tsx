@@ -14,11 +14,18 @@ const LoginScreen = () => {
   const login = useAuthStore((s) => s.login);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
     const success = await login(email, password);
-    if (success) router.push('/dashboard');
+    if (success) {
+      router.push('/dashboard');
+      return;
+    }
+
+    setError('লগইন ব্যর্থ হয়েছে। শুধুমাত্র অনুমোদিত অ্যাডমিন ইমেইল ব্যবহার করুন।');
   };
 
   return (
@@ -33,6 +40,7 @@ const LoginScreen = () => {
           <form onSubmit={handleSubmit} className="rounded-lg border border-border bg-card p-6 space-y-4">
             <div><Label htmlFor="email">ইমেইল</Label><Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required /></div>
             <div><Label htmlFor="password">পাসওয়ার্ড</Label><Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required /></div>
+            {error ? <p className="text-sm text-destructive">{error}</p> : null}
             <div className="text-right"><Link href="/forgot-password" className="text-sm text-primary hover:underline">পাসওয়ার্ড ভুলে গেছেন?</Link></div>
             <Button type="submit" className="w-full" size="lg">সাইন ইন</Button>
             <p className="text-center text-sm text-muted-foreground">

@@ -1,9 +1,11 @@
 "use client";
 
+import { useEffect, useMemo, useState } from "react";
+
 import { Layout } from "@/components/layout/Layout";
-import { categories, menuItems } from "@/mocks/menu";
-import signaturePicks from "@/features/home/content/signature-picks.json";
-import featuredItems from "@/features/home/content/featured-items.json";
+import { menuApi } from "@/features/menu/services/menu-api";
+import type { Category, MenuItem } from "@/features/menu/types";
+import { apiClient } from "@/services/api-client";
 
 import { HomeHeroSection } from "@/features/home/components/HomeHeroSection";
 import { StatsSection } from "@/features/home/components/StatsSection";
@@ -12,32 +14,6 @@ import { VideoHighlightSection } from "@/features/home/components/VideoHighlight
 import { ComboOffersSection } from "@/features/home/components/ComboOffersSection";
 import { TestimonialsSection } from "@/features/home/components/TestimonialsSection";
 import { ReserveCtaSection } from "@/features/home/components/ReserveCtaSection";
-
-const categoryLabelMap = Object.fromEntries(categories.map((category) => [category.slug, category.name]));
-
-const comboOffers = [
-  {
-    id: "combo-family",
-    name: "ফ্যামিলি কম্বো",
-    details: "২টি বার্গার, ১টি উইংস প্ল্যাটার, ২টি ড্রিংকস",
-    price: 34.99,
-    image: menuItems[6].image,
-  },
-  {
-    id: "combo-couple",
-    name: "কাপল ডিলাইট",
-    details: "১টি স্টেক, ১টি সালমন, ২টি ফ্রেশ জুস",
-    price: 49.99,
-    image: menuItems[4].image,
-  },
-  {
-    id: "combo-snack",
-    name: "স্ন্যাক টাইম বক্স",
-    details: "ক্যালামারি, ব্রুশকেটা, লেমনেড",
-    price: 21.99,
-    image: menuItems[0].image,
-  },
-];
 
 const testimonials = [
   {
@@ -56,11 +32,46 @@ const testimonials = [
 ];
 
 export default function HomeScreen() {
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [featured, setFeatured] = useState<MenuItem[]>([]);
+  const [comboOffers, setComboOffers] = useState<Array<{ id: string; name: string; details: string; price: number; image: string }>>([]);
+  const [signatureItems, setSignatureItems] = useState<Array<{ id: string; name: string; image: string; category: string; price: number }>>([]);
+
+  useEffect(() => {
+    const loadHomeData = async () => {
+      try {
+        const [categoriesData, featuredData, comboData, signatureData] = await Promise.all([
+          menuApi.getCategories(),
+          menuApi.getFeaturedItems(),
+          apiClient.get<{ data: Array<{ id: string; name: string; details: string; price: number; image: string }> }>("/home/combo-offers"),
+          apiClient.get<{ data: Array<{ id: string; name: string; image: string; category: string; price: number }> }>("/home/signature-items"),
+        ]);
+
+        setCategories(categoriesData);
+        setFeatured(featuredData);
+        setComboOffers(comboData.data.data || []);
+        setSignatureItems(signatureData.data.data || []);
+      } catch {
+        setCategories([]);
+        setFeatured([]);
+        setComboOffers([]);
+        setSignatureItems([]);
+      }
+    };
+
+    void loadHomeData();
+  }, []);
+
+  const categoryLabelMap = useMemo(
+    () => Object.fromEntries(categories.map((category) => [category.slug, category.name])),
+    [categories],
+  );
+
   return (
     <Layout>
-      <HomeHeroSection signaturePicks={signaturePicks} categoryLabelMap={categoryLabelMap} />
+      <HomeHeroSection signaturePicks={signatureItems} categoryLabelMap={categoryLabelMap} />
       <StatsSection />
-      <FeaturedItemsSection items={featuredItems} />
+      <FeaturedItemsSection items={featured} />
       <VideoHighlightSection />
       <ComboOffersSection offers={comboOffers} />
       <TestimonialsSection testimonials={testimonials} />

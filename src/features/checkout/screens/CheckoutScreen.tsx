@@ -10,6 +10,7 @@ import { Label } from '@/components/ui/label';
 import { PhoneCall } from 'lucide-react';
 import { formatCurrency } from '@/lib/utils';
 import { getDirectCallUrl, getWhatsAppUrlWithMessage, RESTAURANT_NAME } from '@/constants/whatsapp';
+import { apiClient } from '@/services/api-client';
 
 const BKASH_PAYMENT_NUMBER = '+8801747874773';
 
@@ -26,10 +27,28 @@ const CheckoutScreen = () => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const orderNumber = `ORD-${Date.now().toString(36).toUpperCase()}`;
+    let orderNumber = `ORD-${Date.now().toString(36).toUpperCase()}`;
+
+    try {
+      const response = await apiClient.post<{ data?: { orderNumber?: string } }>('/orders', {
+        customerName: `${form.firstName} ${form.lastName}`.trim(),
+        customerPhone: form.phone,
+        deliveryAddress: `${form.street}, ${form.city}, ${form.state}`,
+        items: items.map((item) => ({
+          menuItemId: item.menuItem.id,
+          quantity: item.quantity,
+        })),
+      });
+
+      if (response.data?.data?.orderNumber) {
+        orderNumber = response.data.data.orderNumber;
+      }
+    } catch {
+      // Continue with WhatsApp flow even if order persistence fails.
+    }
 
     const orderLines = items
       .map(

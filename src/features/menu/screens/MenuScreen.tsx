@@ -1,22 +1,39 @@
 "use client";
 
-import { useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Layout } from '@/components/layout/Layout';
 import { FoodCard } from '@/features/menu/components/FoodCard';
-import { menuItems, categories } from '@/mocks/menu';
 import { Button } from '@/components/ui/button';
 import { WhatsAppOrderButton } from '@/components/layout/WhatsAppOrderButton';
+import { menuApi } from '@/features/menu/services/menu-api';
+import type { Category, MenuItem } from '@/features/menu/types';
 
 const MenuScreen = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const activeCategory = searchParams.get('category') || 'all';
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [items, setItems] = useState<MenuItem[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const filtered = useMemo(() => {
-    if (activeCategory === 'all') return menuItems;
-    return menuItems.filter((i) => i.category === activeCategory);
+  useEffect(() => {
+    const loadData = async () => {
+      setLoading(true);
+      try {
+        const [categoriesData, itemsData] = await Promise.all([
+          menuApi.getCategories(),
+          menuApi.getMenuItems(activeCategory),
+        ]);
+        setCategories(categoriesData);
+        setItems(itemsData);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    void loadData();
   }, [activeCategory]);
 
   const handleCategory = (slug: string) => {
@@ -61,12 +78,18 @@ const MenuScreen = () => {
 
         {/* Items grid */}
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {filtered.map((item) => (
+          {items.map((item) => (
             <FoodCard key={item.id} item={item} />
           ))}
         </div>
 
-        {filtered.length === 0 && (
+        {loading && (
+          <div className="py-14 text-center text-muted-foreground">
+            <p className="text-base">মেনু লোড হচ্ছে...</p>
+          </div>
+        )}
+
+        {!loading && items.length === 0 && (
           <div className="py-20 text-center text-muted-foreground">
             <p className="text-lg">এই ক্যাটাগরিতে কোনো আইটেম পাওয়া যায়নি।</p>
           </div>

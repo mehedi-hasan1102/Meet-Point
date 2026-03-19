@@ -1,27 +1,81 @@
 import type { Category, MenuItem } from "@/features/menu/types";
-import { categories, menuItems } from "@/mocks/menu";
+import { apiClient } from "@/services/api-client";
 
-// Structured for future Strapi integration — swap mock returns with apiClient calls
+type ApiCategory = {
+  id: string;
+  name: string;
+  slug: string;
+  image?: string | null;
+  description?: string | null;
+};
+
+type ApiMenuItem = {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  image: string;
+  available: boolean;
+  featured: boolean;
+  tags: string[];
+  category?: string;
+  categoryId?: string;
+};
+
+const toMenuItem = (item: ApiMenuItem): MenuItem => ({
+  id: item.id,
+  name: item.name,
+  description: item.description,
+  price: item.price,
+  image: item.image,
+  available: item.available,
+  featured: item.featured,
+  tags: item.tags || [],
+  category: item.category || item.categoryId || "",
+});
+
 export const menuApi = {
   getCategories: async (): Promise<Category[]> => {
-    // Future: return (await apiClient.get('/categories')).data;
-    return categories;
+    try {
+      const response = await apiClient.get<{ data: ApiCategory[] }>("/categories");
+      return response.data.data;
+    } catch {
+      return [];
+    }
   },
 
   getMenuItems: async (category?: string): Promise<MenuItem[]> => {
-    // Future: return (await apiClient.get('/menu-items', { params: { category } })).data;
-    if (category && category !== 'all') {
-      return menuItems.filter((item) => item.category === category);
+    try {
+      const response = await apiClient.get<{ data: ApiMenuItem[] }>("/menu-items", {
+        params: {
+          ...(category && category !== "all" ? { category } : {}),
+        },
+      });
+
+      return response.data.data.map(toMenuItem);
+    } catch {
+      return [];
     }
-    return menuItems;
   },
 
   getMenuItem: async (id: string): Promise<MenuItem | undefined> => {
-    // Future: return (await apiClient.get(`/menu-items/${id}`)).data;
-    return menuItems.find((item) => item.id === id);
+    try {
+      const response = await apiClient.get<{ data: ApiMenuItem }>(`/menu-items/${id}`);
+      return toMenuItem(response.data.data);
+    } catch {
+      return undefined;
+    }
   },
 
   getFeaturedItems: async (): Promise<MenuItem[]> => {
-    return menuItems.filter((item) => item.featured);
+    try {
+      const response = await apiClient.get<{ data: ApiMenuItem[] }>("/menu-items", {
+        params: { featured: true },
+      });
+
+      return response.data.data.map(toMenuItem);
+    } catch {
+      return [];
+    }
   },
 };
