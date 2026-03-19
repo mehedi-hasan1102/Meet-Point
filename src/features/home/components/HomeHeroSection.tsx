@@ -28,19 +28,19 @@ export function HomeHeroSection({ signaturePicks, categoryLabelMap }: HomeHeroSe
       <div className="absolute inset-0 bg-black/10" />
 
       <div className="container relative grid min-h-screen gap-12 pb-16 pt-28 md:pb-24 md:pt-32 lg:grid-cols-[1fr_420px] lg:items-center">
-        <div className="animate-fade-in">
+        <div className="animate-fade-in text-center lg:text-left">
           <span className="bn-label mb-6 inline-block rounded-full border border-gold/35 bg-black/20 px-4 py-1.5 text-xs font-semibold text-gold">
             মিট পয়েন্টে স্বাগতম
           </span>
-          <h1 className="max-w-2xl font-display text-4xl font-bold leading-tight text-warm-cream sm:text-5xl md:text-6xl">
+          <h1 className="mx-auto max-w-2xl font-display text-4xl font-bold leading-tight text-warm-cream sm:text-5xl md:text-6xl lg:mx-0">
             আসল স্বাদ,
             <br />
             যত্নে পরিবেশন
           </h1>
-          <p className="mt-5 max-w-xl text-base leading-relaxed text-warm-cream/80 md:text-lg">
+          <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-warm-cream/80 md:text-lg lg:mx-0">
             এক জায়গায় পেয়ে যান রেস্টুরেন্ট-স্টাইলের খাবার, স্পেশাল কম্বো অফার এবং হোম ডেলিভারি। প্রতিটি পদে তাজা উপকরণ ও ঘরোয়া সমৃদ্ধ স্বাদ।
           </p>
-          <div className="mt-8 flex flex-wrap gap-4">
+          <div className="mt-8 flex flex-wrap justify-center gap-4 lg:justify-start">
             <Button asChild size="lg" className="px-7">
               <Link href="/menu">
                 মেনু দেখুন <ArrowRight className="ml-2 h-4 w-4" />
