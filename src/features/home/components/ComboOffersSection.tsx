@@ -64,7 +64,7 @@ export function ComboOffersSection({ offers }: ComboOffersSectionProps) {
                 <p className="mt-2 text-sm text-muted-foreground">{combo.details}</p>
                 <Button
                   variant="primary"
-                  className="mt-4"
+                  className="mt-4 w-full justify-center"
                   onClick={() => handleOrderCombo(combo)}
                 >
                   এই কম্বো অর্ডার করুন <ArrowRight className="ml-1 h-4 w-4" />

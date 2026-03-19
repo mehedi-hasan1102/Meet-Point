@@ -4,7 +4,6 @@ import { Facebook, Instagram, MessageCircleMore } from 'lucide-react';
 import type { ComponentType, SVGProps } from 'react';
 
 import { siteContact } from '@/constants/site-contact';
-import { getWhatsAppOrderUrl } from '@/constants/whatsapp';
 
 const socialIconMap: Record<string, ComponentType<SVGProps<SVGSVGElement>>> = {
   whatsapp: MessageCircleMore,
@@ -15,19 +14,19 @@ const socialIconMap: Record<string, ComponentType<SVGProps<SVGSVGElement>>> = {
 export function Footer() {
   return (
     <footer className="border-t border-gold/20 bg-charcoal text-warm-cream">
-      <div className="container py-14">
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+      <div className="container py-10 pb-28 sm:py-14 sm:pb-14">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <Link href="/" className="inline-flex items-center gap-4">
+            <Link href="/" className="inline-flex items-start gap-3 sm:items-center sm:gap-4">
               <Image
                 src="/logo.png"
                 alt={siteContact.restaurant.name}
                 width={160}
                 height={160}
-                className="h-24 w-auto sm:h-28"
+                className="h-20 w-auto sm:h-28"
               />
               <span className="flex flex-col leading-none">
-                <span className="font-display text-3xl font-bold uppercase text-gold">{siteContact.restaurant.shortName}</span>
+                <span className="font-display text-2xl font-bold uppercase text-gold sm:text-3xl">{siteContact.restaurant.shortName}</span>
                 <span className="mt-2 text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-warm-cream/70">
                   Cafe & Restaurant
                 </span>
@@ -44,9 +43,6 @@ export function Footer() {
               {[['হোম', '/'], ['মেনু', '/menu'], ['কার্ট', '/cart'], ['ড্যাশবোর্ড', '/dashboard']].map(([label, to]) => (
                 <Link key={to} href={to} className="text-sm text-warm-cream/70 transition-colors hover:text-gold">{label}</Link>
               ))}
-              <a href={getWhatsAppOrderUrl()} target="_blank" rel="noreferrer" className="text-sm text-warm-cream/70 transition-colors hover:text-gold">
-                হোয়াটসঅ্যাপে অর্ডার করুন
-              </a>
             </div>
           </div>
 
@@ -73,7 +69,7 @@ export function Footer() {
                 Google Map Location
               </a>
             </div>
-            <div className="mt-4 flex items-center gap-3">
+            <div className="mt-4 flex flex-wrap items-center gap-3">
               {siteContact.social.footerLinks.map((item) => {
                 const Icon = socialIconMap[item.platform] || MessageCircleMore;
                 return (
@@ -93,7 +89,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 border-t border-warm-cream/10 pt-6 text-center text-xs text-warm-cream/45">
+        <div className="mt-10 border-t border-warm-cream/10 pt-6 text-center text-xs text-warm-cream/55">
           <p>© {new Date().getFullYear()} Meet POINT. সর্বস্বত্ব সংরক্ষিত।</p>
           <p className="mt-1">
             <a

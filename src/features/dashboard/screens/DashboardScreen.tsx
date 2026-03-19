@@ -528,30 +528,31 @@ export default function DashboardScreen() {
         <div className="rounded-2xl border border-border bg-card p-5 shadow-sm md:p-8">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
-              <h1 className="font-display text-3xl font-bold text-foreground md:text-4xl">Dashboard Control Center</h1>
+              <h1 className="font-display text-2xl font-bold text-foreground sm:text-3xl md:text-4xl">Dashboard Control Center</h1>
               <p className="mt-1 text-sm text-muted-foreground">Food, combo offers, hero signature items এবং stock status এক জায়গা থেকে manage করুন।</p>
             </div>
-            <div className="flex flex-wrap items-center gap-2">
-              <Button asChild variant="secondary">
+            <div className="flex w-full flex-wrap items-center gap-2 sm:w-auto">
+              <Button asChild variant="secondary" className="w-full sm:w-auto">
                 <Link href="/">
                   <House className="h-4 w-4" /> Back Home
                 </Link>
               </Button>
-              <Button variant="secondary" onClick={() => void loadData()} disabled={loading || saving || loggingOut}>
+              <Button variant="secondary" onClick={() => void loadData()} disabled={loading || saving || loggingOut} className="w-full sm:w-auto">
                 <RefreshCw className="h-4 w-4" /> Refresh
               </Button>
-              <Button variant="secondary" onClick={() => void handleLogout()} disabled={loggingOut} className="border-destructive/40 text-destructive">
+              <Button variant="secondary" onClick={() => void handleLogout()} disabled={loggingOut} className="w-full border-destructive/40 text-destructive sm:w-auto">
                 <LogOut className="h-4 w-4" /> {loggingOut ? "Logging out..." : "Logout"}
               </Button>
             </div>
           </div>
 
-          <div className="mt-6 flex flex-wrap gap-2">
+          <div className="mt-6 flex gap-2 overflow-x-auto pb-1">
             {navItems.map((item) => (
               <Button
                 key={item.key}
                 variant={tab === item.key ? "primary" : "secondary"}
                 onClick={() => setTab(item.key)}
+                className="shrink-0"
               >
                 <item.icon className="h-4 w-4" /> {item.label}
               </Button>
@@ -586,7 +587,42 @@ export default function DashboardScreen() {
                 <Button onClick={openCreateFood}><Plus className="h-4 w-4" /> Add Food</Button>
               </div>
 
-              <div className="overflow-x-auto">
+              <div className="space-y-3 p-4 md:hidden">
+                {menuItems.map((item) => (
+                  <div key={item.id} className="rounded-lg border border-border bg-card p-3">
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        <p className="font-semibold text-foreground">{item.name}</p>
+                        <p className="text-xs text-muted-foreground">{item.categoryName}</p>
+                      </div>
+                      <p className="text-sm font-medium text-foreground">{formatCurrency(item.price)}</p>
+                    </div>
+                    <p className="mt-2 line-clamp-2 text-xs text-muted-foreground">{item.description}</p>
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      <Button
+                        variant="secondary"
+                        size="sm"
+                        onClick={() => void toggleFoodAvailability(item)}
+                        disabled={saving}
+                        className={item.available ? "border-success/40 text-success" : "border-destructive/40 text-destructive"}
+                      >
+                        {item.available ? "In Stock" : "Out Of Stock"}
+                      </Button>
+                      <Button size="sm" variant="secondary" onClick={() => openEditFood(item)}>
+                        <SquarePen className="h-4 w-4" /> Edit
+                      </Button>
+                      <Button size="sm" variant="secondary" onClick={() => void deleteFood(item.id)} className="border-destructive/40 text-destructive">
+                        <Trash2 className="h-4 w-4" /> Delete
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+                {!loading && menuItems.length === 0 ? (
+                  <div className="rounded-lg border border-dashed border-border p-8 text-center text-sm text-muted-foreground">No food items found.</div>
+                ) : null}
+              </div>
+
+              <div className="hidden overflow-x-auto md:block">
                 <table className="w-full min-w-[920px] text-sm">
                   <thead>
                     <tr className="border-b border-border bg-muted/40 text-left">
@@ -650,7 +686,7 @@ export default function DashboardScreen() {
                 <Button onClick={openCreateCombo}><Plus className="h-4 w-4" /> Add Combo</Button>
               </div>
 
-              <div className="grid gap-4 p-4 md:grid-cols-2 xl:grid-cols-3">
+              <div className="grid gap-4 p-4 sm:grid-cols-2 xl:grid-cols-3">
                 {comboOffers.map((offer) => (
                   <div key={offer.id} className="overflow-hidden rounded-xl border border-border bg-card">
                     <img src={offer.image} alt={offer.name} className="h-36 w-full object-cover" />
@@ -666,11 +702,11 @@ export default function DashboardScreen() {
                           {offer.isActive ? "Active" : "Inactive"}
                         </span>
                       </div>
-                      <div className="flex gap-2 pt-1">
-                        <Button size="sm" variant="secondary" onClick={() => openEditCombo(offer)}>
+                      <div className="flex flex-wrap gap-2 pt-1">
+                        <Button size="sm" variant="secondary" onClick={() => openEditCombo(offer)} className="flex-1 min-w-[110px]">
                           <SquarePen className="h-4 w-4" /> Edit
                         </Button>
-                        <Button size="sm" variant="secondary" className="border-destructive/40 text-destructive" onClick={() => void deleteCombo(offer.id)}>
+                        <Button size="sm" variant="secondary" className="flex-1 min-w-[110px] border-destructive/40 text-destructive" onClick={() => void deleteCombo(offer.id)}>
                           <Trash2 className="h-4 w-4" /> Delete
                         </Button>
                       </div>
@@ -694,7 +730,38 @@ export default function DashboardScreen() {
                 <Button onClick={openCreateSignature}><Plus className="h-4 w-4" /> Add Signature Food</Button>
               </div>
 
-              <div className="overflow-x-auto">
+              <div className="space-y-3 p-4 md:hidden">
+                {signatureItems.map((item) => (
+                  <div key={item.id} className="rounded-lg border border-border bg-card p-3">
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        <p className="font-semibold text-foreground">{item.menuItem.name}</p>
+                        <p className="text-xs text-muted-foreground">{item.menuItem.categoryName}</p>
+                      </div>
+                      <p className="text-sm font-medium text-foreground">{formatCurrency(item.menuItem.price)}</p>
+                    </div>
+                    <div className="mt-2 flex items-center gap-2 text-xs text-muted-foreground">
+                      <span>Order: {item.sortOrder}</span>
+                      <span className={`rounded-full px-2 py-0.5 ${item.isActive ? "bg-success/10 text-success" : "bg-muted"}`}>
+                        {item.isActive ? "Active" : "Inactive"}
+                      </span>
+                    </div>
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      <Button size="sm" variant="secondary" onClick={() => openEditSignature(item)}>
+                        <SquarePen className="h-4 w-4" /> Edit
+                      </Button>
+                      <Button size="sm" variant="secondary" className="border-destructive/40 text-destructive" onClick={() => void deleteSignature(item.id)}>
+                        <Trash2 className="h-4 w-4" /> Delete
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+                {!loading && signatureItems.length === 0 ? (
+                  <div className="rounded-lg border border-dashed border-border p-8 text-center text-sm text-muted-foreground">No signature item configured yet.</div>
+                ) : null}
+              </div>
+
+              <div className="hidden overflow-x-auto md:block">
                 <table className="w-full min-w-[860px] text-sm">
                   <thead>
                     <tr className="border-b border-border bg-muted/40 text-left">
@@ -747,7 +814,7 @@ export default function DashboardScreen() {
       </div>
 
       <Dialog open={foodDialogOpen} onOpenChange={setFoodDialogOpen}>
-        <DialogContent>
+        <DialogContent className="max-h-[85vh] w-[calc(100vw-1.5rem)] max-w-2xl overflow-y-auto p-4 sm:p-6">
           <DialogHeader>
             <DialogTitle>{editingFoodId ? "Edit Food" : "Add Food"}</DialogTitle>
             <DialogDescription>Food details update করলে menu ও homepage data refresh হবে।</DialogDescription>
@@ -762,7 +829,7 @@ export default function DashboardScreen() {
               <Label>Description</Label>
               <Textarea value={foodForm.description} onChange={(event) => setFoodForm((prev) => ({ ...prev, description: event.target.value }))} />
             </div>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid gap-3 sm:grid-cols-2">
               <div>
                 <Label>Price</Label>
                 <Input type="number" min="0" step="0.01" value={foodForm.price} onChange={(event) => setFoodForm((prev) => ({ ...prev, price: event.target.value }))} />
@@ -819,15 +886,15 @@ export default function DashboardScreen() {
             </div>
           </div>
 
-          <DialogFooter>
-            <Button variant="secondary" onClick={() => setFoodDialogOpen(false)}>Cancel</Button>
-            <Button onClick={() => void saveFood()} disabled={saving || imageUploading}>{editingFoodId ? "Save Changes" : "Create Food"}</Button>
+          <DialogFooter className="gap-2">
+            <Button variant="secondary" className="w-full sm:w-auto" onClick={() => setFoodDialogOpen(false)}>Cancel</Button>
+            <Button className="w-full sm:w-auto" onClick={() => void saveFood()} disabled={saving || imageUploading}>{editingFoodId ? "Save Changes" : "Create Food"}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
 
       <Dialog open={comboDialogOpen} onOpenChange={setComboDialogOpen}>
-        <DialogContent>
+        <DialogContent className="max-h-[85vh] w-[calc(100vw-1.5rem)] max-w-2xl overflow-y-auto p-4 sm:p-6">
           <DialogHeader>
             <DialogTitle>{editingComboId ? "Edit Combo Offer" : "Add Combo Offer"}</DialogTitle>
             <DialogDescription>Homepage combo section dynamicভাবে update হবে।</DialogDescription>
@@ -842,7 +909,7 @@ export default function DashboardScreen() {
               <Label>Details</Label>
               <Textarea value={comboForm.details} onChange={(event) => setComboForm((prev) => ({ ...prev, details: event.target.value }))} />
             </div>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid gap-3 sm:grid-cols-2">
               <div>
                 <Label>Price</Label>
                 <Input type="number" min="0" step="0.01" value={comboForm.price} onChange={(event) => setComboForm((prev) => ({ ...prev, price: event.target.value }))} />
@@ -865,15 +932,15 @@ export default function DashboardScreen() {
             </div>
           </div>
 
-          <DialogFooter>
-            <Button variant="secondary" onClick={() => setComboDialogOpen(false)}>Cancel</Button>
-            <Button onClick={() => void saveCombo()} disabled={saving}>{editingComboId ? "Save Changes" : "Create Combo"}</Button>
+          <DialogFooter className="gap-2">
+            <Button variant="secondary" className="w-full sm:w-auto" onClick={() => setComboDialogOpen(false)}>Cancel</Button>
+            <Button className="w-full sm:w-auto" onClick={() => void saveCombo()} disabled={saving}>{editingComboId ? "Save Changes" : "Create Combo"}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
 
       <Dialog open={signatureDialogOpen} onOpenChange={setSignatureDialogOpen}>
-        <DialogContent>
+        <DialogContent className="max-h-[85vh] w-[calc(100vw-1.5rem)] max-w-2xl overflow-y-auto p-4 sm:p-6">
           <DialogHeader>
             <DialogTitle>{editingSignatureId ? "Edit Signature Item" : "Add Signature Item"}</DialogTitle>
             <DialogDescription>Hero section এর আজকের signature list manage করুন।</DialogDescription>
@@ -906,9 +973,9 @@ export default function DashboardScreen() {
             </div>
           </div>
 
-          <DialogFooter>
-            <Button variant="secondary" onClick={() => setSignatureDialogOpen(false)}>Cancel</Button>
-            <Button onClick={() => void saveSignature()} disabled={saving}>{editingSignatureId ? "Save Changes" : "Add Signature"}</Button>
+          <DialogFooter className="gap-2">
+            <Button variant="secondary" className="w-full sm:w-auto" onClick={() => setSignatureDialogOpen(false)}>Cancel</Button>
+            <Button className="w-full sm:w-auto" onClick={() => void saveSignature()} disabled={saving}>{editingSignatureId ? "Save Changes" : "Add Signature"}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

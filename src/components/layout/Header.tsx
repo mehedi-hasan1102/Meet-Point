@@ -55,27 +55,27 @@ export function Header() {
           : 'border-b border-border/70 bg-background/95 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-background/85'
       }`}
     >
-      <div className="container flex h-20 items-center justify-between">
-        <Link href="/" className="flex items-center gap-3">
+      <div className="container flex h-16 items-center justify-between sm:h-20">
+        <Link href="/" className="flex min-w-0 items-center gap-2 sm:gap-3">
           <Image
             src="/logo.png"
             alt="Meet Point Cafe & Restaurant"
             width={108}
             height={108}
             priority
-            className="h-16 w-auto sm:h-[4.5rem]"
+            className="h-12 w-auto sm:h-[4.5rem]"
           />
-          <span className="flex flex-col leading-none">
+          <span className="flex min-w-0 flex-col leading-none">
             <span
-              className={`font-display text-2xl font-bold uppercase sm:text-3xl ${
+              className={`truncate font-display text-xl font-bold uppercase sm:text-3xl ${
                 isTransparent ? 'text-warm-cream' : 'text-primary'
               }`}
             >
               Meet Point
             </span>
             <span
-              className={`text-[0.65rem] font-semibold uppercase tracking-[0.28em] ${
-                isTransparent ? 'text-warm-cream/72' : 'text-muted-foreground'
+              className={`hidden text-[0.62rem] font-semibold uppercase tracking-[0.2em] sm:block ${
+                isTransparent ? 'text-gold' : 'text-black'
               }`}
             >
               Cafe & Restaurant
@@ -147,6 +147,9 @@ export function Header() {
                 {link.label}
               </Link>
             ))}
+            <Button asChild className="mt-2">
+              <Link href="/menu" onClick={() => setMobileOpen(false)}>অর্ডার করুন</Link>
+            </Button>
           </nav>
         </div>
       )}
