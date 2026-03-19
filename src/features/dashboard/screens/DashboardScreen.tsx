@@ -3,8 +3,13 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type { ChangeEvent } from "react";
 import axios from "axios";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { signOut } from "next-auth/react";
 import {
+  House,
   LayoutDashboard,
+  LogOut,
   Plus,
   RefreshCw,
   SquarePen,
@@ -144,9 +149,11 @@ const emptySignatureForm: SignatureFormState = {
 };
 
 export default function DashboardScreen() {
+  const router = useRouter();
   const [tab, setTab] = useState<AdminTab>("overview");
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [loggingOut, setLoggingOut] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
 
   const [categories, setCategories] = useState<AdminCategory[]>([]);
@@ -505,6 +512,16 @@ export default function DashboardScreen() {
     }
   };
 
+  const handleLogout = async () => {
+    setLoggingOut(true);
+    try {
+      await signOut({ redirect: false });
+      router.replace("/admin/login");
+    } finally {
+      setLoggingOut(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-warm-cream via-background to-background">
       <div className="container py-8 md:py-12">
@@ -514,9 +531,19 @@ export default function DashboardScreen() {
               <h1 className="font-display text-3xl font-bold text-foreground md:text-4xl">Dashboard Control Center</h1>
               <p className="mt-1 text-sm text-muted-foreground">Food, combo offers, hero signature items এবং stock status এক জায়গা থেকে manage করুন।</p>
             </div>
-            <Button variant="secondary" onClick={() => void loadData()} disabled={loading || saving}>
-              <RefreshCw className="h-4 w-4" /> Refresh
-            </Button>
+            <div className="flex flex-wrap items-center gap-2">
+              <Button asChild variant="secondary">
+                <Link href="/">
+                  <House className="h-4 w-4" /> Back Home
+                </Link>
+              </Button>
+              <Button variant="secondary" onClick={() => void loadData()} disabled={loading || saving || loggingOut}>
+                <RefreshCw className="h-4 w-4" /> Refresh
+              </Button>
+              <Button variant="secondary" onClick={() => void handleLogout()} disabled={loggingOut} className="border-destructive/40 text-destructive">
+                <LogOut className="h-4 w-4" /> {loggingOut ? "Logging out..." : "Logout"}
+              </Button>
+            </div>
           </div>
 
           <div className="mt-6 flex flex-wrap gap-2">
