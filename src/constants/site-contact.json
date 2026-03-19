@@ -10,13 +10,30 @@
     "email": "hello@meetpoint.com"
   },
   "location": {
-    "address": "হাউস ২২, ধানমন্ডি, ঢাকা",
-    "mapUrl": "https://maps.google.com/?q=House+22,+Dhanmondi,+Dhaka"
+    "address": "বাতায়ন কমপ্লেক্স, বড় বাজার, নেত্রকোনা। ",
+    "mapUrl": "https://maps.app.goo.gl/G4SCMjqyQBfSQmjH7"
   },
   "social": {
     "messengerUrl": "https://m.me/meetpointrestaurant",
     "instagramUrl": "https://ig.me/m/meetpointrestaurant",
-    "facebookUrl": "https://facebook.com/meetpointrestaurant"
+    "facebookUrl": "https://facebook.com/meetpointrestaurant",
+    "footerLinks": [
+      {
+        "platform": "whatsapp",
+        "label": "WhatsApp",
+        "url": "https://wa.me/8801747874773"
+      },
+      {
+        "platform": "facebook",
+        "label": "Facebook",
+        "url": "https://facebook.com/meetpointrestaurant"
+      },
+      {
+        "platform": "instagram",
+        "label": "Instagram",
+        "url": "https://ig.me/m/meetpointrestaurant"
+      }
+    ]
   },
   "payment": {
     "bkashNumber": "+8801747874773"
