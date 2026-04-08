@@ -82,7 +82,7 @@ src/
 
 - Current flows use local mock data from `src/data/mock-data.ts`.
 - API utilities in `src/lib/api` are structured for easy migration to real backend endpoints.
-- Authentication state is persisted locally via Zustand middleware.
+- Authentication state is persisted locally via Zustand middleware....
 
 
 
