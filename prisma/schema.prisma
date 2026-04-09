@@ -3,12 +3,12 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
 model AdminUser {
-  id           String   @id @default(cuid())
+  id           String   @id @default(cuid()) @map("_id")
   email        String   @unique
   name         String
   passwordHash String
@@ -19,7 +19,7 @@ model AdminUser {
 }
 
 model Category {
-  id          String   @id @default(cuid())
+  id          String   @id @default(cuid()) @map("_id")
   name        String
   slug        String   @unique
   image       String?
@@ -30,7 +30,7 @@ model Category {
 }
 
 model MenuItem {
-  id          String   @id @default(cuid())
+  id          String   @id @default(cuid()) @map("_id")
   name        String
   description String
   price       Float
@@ -39,7 +39,7 @@ model MenuItem {
   featured    Boolean  @default(false)
   tags        String[] @default([])
   categoryId  String
-  category    Category @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   orderItems  OrderItem[]
   signatureItems SignatureItem[]
   createdAt   DateTime @default(now())
@@ -51,7 +51,7 @@ model MenuItem {
 }
 
 model ComboOffer {
-  id        String   @id @default(cuid())
+  id        String   @id @default(cuid()) @map("_id")
   name      String
   details   String
   price     Float
@@ -66,7 +66,7 @@ model ComboOffer {
 }
 
 model SignatureItem {
-  id         String   @id @default(cuid())
+  id         String   @id @default(cuid()) @map("_id")
   menuItemId String
   sortOrder  Int      @default(0)
   isActive   Boolean  @default(true)
@@ -80,7 +80,7 @@ model SignatureItem {
 }
 
 model Order {
-  id              String      @id @default(cuid())
+  id              String      @id @default(cuid()) @map("_id")
   orderNumber     String      @unique
   status          String      @default("pending")
   customerName    String
@@ -98,13 +98,13 @@ model Order {
 }
 
 model OrderItem {
-  id        String   @id @default(cuid())
+  id        String   @id @default(cuid()) @map("_id")
   orderId   String
   menuItemId String
   quantity  Int
   unitPrice Float
   order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  menuItem  MenuItem @relation(fields: [menuItemId], references: [id], onDelete: Restrict)
+  menuItem  MenuItem @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
 
   @@index([orderId])
