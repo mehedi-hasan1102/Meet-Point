@@ -169,6 +169,7 @@ export default function DashboardScreen() {
   const [comboDialogOpen, setComboDialogOpen] = useState(false);
   const [editingComboId, setEditingComboId] = useState<string | null>(null);
   const [comboForm, setComboForm] = useState<ComboFormState>(emptyComboForm);
+  const [comboImageUploading, setComboImageUploading] = useState(false);
 
   const [signatureDialogOpen, setSignatureDialogOpen] = useState(false);
   const [editingSignatureId, setEditingSignatureId] = useState<string | null>(null);
@@ -341,6 +342,64 @@ export default function DashboardScreen() {
     if (!file) return;
 
     await uploadFoodImage(file);
+    event.target.value = "";
+  };
+
+  const uploadComboImage = async (file: File) => {
+    if (!file.type.startsWith("image/")) {
+      setMessage("শুধু image file upload করতে পারবেন।");
+      return;
+    }
+
+    setComboImageUploading(true);
+    try {
+      const signRes = await apiClient.post<{
+        timestamp: number;
+        folder: string;
+        signature: string;
+        cloudName: string;
+        apiKey: string;
+      }>("/admin/uploads/signature");
+
+      const { timestamp, folder, signature, cloudName, apiKey } = signRes.data;
+
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("api_key", apiKey);
+      formData.append("timestamp", String(timestamp));
+      formData.append("folder", folder);
+      formData.append("signature", signature);
+
+      const uploadRes = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!uploadRes.ok) {
+        setMessage("Image upload failed. আবার চেষ্টা করুন।");
+        return;
+      }
+
+      const uploaded = await uploadRes.json() as { secure_url?: string };
+      if (!uploaded.secure_url) {
+        setMessage("Image URL পাওয়া যায়নি।");
+        return;
+      }
+
+      setComboForm((prev) => ({ ...prev, image: uploaded.secure_url || "" }));
+      setMessage("Image uploaded successfully.");
+    } catch {
+      setMessage("Image upload failed.");
+    } finally {
+      setComboImageUploading(false);
+    }
+  };
+
+  const handleComboImageFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    await uploadComboImage(file);
     event.target.value = "";
   };
 
@@ -919,9 +978,23 @@ export default function DashboardScreen() {
                 <Input type="number" min="0" value={comboForm.sortOrder} onChange={(event) => setComboForm((prev) => ({ ...prev, sortOrder: event.target.value }))} />
               </div>
             </div>
-            <div>
-              <Label>Image URL</Label>
-              <Input value={comboForm.image} onChange={(event) => setComboForm((prev) => ({ ...prev, image: event.target.value }))} />
+            <div className="grid gap-2">
+              <Label>Combo Image</Label>
+              <div className="flex flex-wrap items-center gap-2">
+                <Label htmlFor="combo-image-upload" className="sr-only">Upload combo image</Label>
+                <Input
+                  id="combo-image-upload"
+                  type="file"
+                  accept="image/*"
+                  onChange={(event) => {
+                    void handleComboImageFileChange(event);
+                  }}
+                  className="max-w-xs"
+                  disabled={comboImageUploading || saving}
+                />
+                {comboImageUploading ? <p className="text-xs text-muted-foreground">Uploading image...</p> : null}
+              </div>
+              {comboForm.image ? <p className="text-xs text-muted-foreground">Image ready for save.</p> : <p className="text-xs text-muted-foreground">Please upload an image.</p>}
             </div>
             <div className="flex items-center justify-between rounded-md border border-border p-3">
               <div>
@@ -934,7 +1007,7 @@ export default function DashboardScreen() {
 
           <DialogFooter className="gap-2">
             <Button variant="secondary" className="w-full sm:w-auto" onClick={() => setComboDialogOpen(false)}>Cancel</Button>
-            <Button className="w-full sm:w-auto" onClick={() => void saveCombo()} disabled={saving}>{editingComboId ? "Save Changes" : "Create Combo"}</Button>
+            <Button className="w-full sm:w-auto" onClick={() => void saveCombo()} disabled={saving || comboImageUploading}>{editingComboId ? "Save Changes" : "Create Combo"}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
