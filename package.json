@@ -12,6 +12,7 @@
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:seed": "prisma db seed",
+    "postbuild": "prisma db seed",
     "test": "vitest run",
     "test:watch": "vitest"
   },
